@@ -15,4 +15,4 @@ def get_record(record_id):
             'id': record.id,
             'name': record.name,
         }
-    }, http.HTTPStatus.OK,
+    }, http.HTTPStatus.OK
