@@ -2,11 +2,11 @@
 import pathlib
 import sys
 
-sys.path.append(str(pathlib.PurePath(__file__).parent.parent))
-
 from omegaconf import OmegaConf
 from testcontainers.postgres import PostgresContainer
 import hydra
+
+sys.path.append(str(pathlib.PurePath(__file__).parent.parent))
 
 import utils
 
@@ -20,8 +20,6 @@ def main():
 config:
   SQLALCHEMY_DATABASE_URI: {postgres.get_connection_url()}''')
 
-        hydra.initialize(version_base=None, config_path='../conf')
-        config = OmegaConf.to_container(hydra.compose(config_name='config'))
         print('Press any key to stop')
         input()
 

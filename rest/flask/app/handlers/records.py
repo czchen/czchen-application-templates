@@ -2,11 +2,11 @@ import http
 
 from werkzeug.exceptions import NotFound
 
-from app.storages import Records
+from app.storages import Record
 
 
 def get_record(record_id):
-    record = Records.query.filter(Records.id == record_id).first()
+    record = Record.query.filter(Record.id == record_id).first()
     if not record:
         raise NotFound(f'cannot find {record_id}')
 

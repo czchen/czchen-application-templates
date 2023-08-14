@@ -14,7 +14,7 @@ db = SQLAlchemy(metadata=sa.MetaData(
 ))
 
 
-class Records(db.Model):
+class Record(db.Model):
     __tablename__ = 'records'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False, server_default='')
