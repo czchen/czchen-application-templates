@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "rest"
+name = "flask-template"
 version = "0.0.0"
-description = "REST API Template"
+description = "Flask REST API template"
 authors = ["ChangZhuo Chen (陳昌倬) <czchen@czchen.org>"]
 license = "MIT"
 
