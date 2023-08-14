@@ -1,0 +1,35 @@
+paths:
+  records_record_id:
+    get:
+      parameters:
+      - in: path
+        name: record_id
+        description: record_id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                properties:
+                  record:
+                    $ref: '#/components/schemas/record'
+        '404':
+          $ref: status-code.yml#/code/404
+      operationId: app.handlers.records.get_record
+
+components:
+  schemas:
+    record:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+        name:
+          type: string

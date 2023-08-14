@@ -1,0 +1,21 @@
+code:
+  '404':
+    description: Not Found
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/error_response'
+
+components:
+  schemas:
+    error_response:
+      additionalProperties: false
+      properties:
+        detail:
+          type: string
+        status:
+          type: integer
+        title:
+          type: string
+        type:
+          type: string

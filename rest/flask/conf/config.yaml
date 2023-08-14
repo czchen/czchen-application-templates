@@ -1,0 +1,33 @@
+defaults:
+- _self_
+- optional app: override
+
+app:
+  config:
+    SQLALCHEMY_DATABASE_URI: no-value
+    SQLALCHEMY_TRACK_MODIFICATIONS: false
+    SQLALCHEMY_ENGINE_OPTIONS:
+      pool_pre_ping: true
+      pool_size: 10
+      pool_recycle: 3600
+
+logging:
+  version: 1
+
+  formatters:
+    struct:
+      class: pythonjsonlogger.jsonlogger.JsonFormatter
+      format: '%(asctime)s;%(levelname)s;%(otelServiceName)s;%(otelTraceID)s;%(otelSpanID)s;%(filename)s:%(funcName)s:%(lineno)d;%(message)s'
+      datefmt: '%Y-%m-%dT%H:%M:%S%z'
+
+  handlers:
+    console:
+      class: logging.StreamHandler
+      formatter: struct
+      level: DEBUG
+      stream: ext://sys.stdout
+
+  root:
+    level: INFO
+    handlers:
+      - console

@@ -1,0 +1,21 @@
+paths:
+  info:
+    get:
+      summary: info
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/info'
+      operationId: app.handlers.info.get_info
+
+components:
+  schemas:
+    info:
+      type: object
+      additionalProperties: false
+      properties:
+        version:
+          type: string

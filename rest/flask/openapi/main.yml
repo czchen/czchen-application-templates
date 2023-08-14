@@ -1,0 +1,11 @@
+openapi: 3.0.0
+info:
+  title: API
+  version: 0.0.0
+
+paths:
+  /info:
+    $ref: info.yml#/paths/info
+
+  /records/{record_id}:
+    $ref: records.yml#/paths/records_record_id
