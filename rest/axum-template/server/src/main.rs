@@ -1,6 +1,5 @@
 use axum::{routing::get, Router};
 use clap::Parser;
-// use config::Config;
 use std::net::SocketAddr;
 use utoipa::OpenApi;
 use utoipa_swagger_ui::SwaggerUi;
