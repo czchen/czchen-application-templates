@@ -20,7 +20,7 @@ def main():
 config:
   SQLALCHEMY_DATABASE_URI: {postgres.get_connection_url()}''')
 
-        print('Press any key to stop')
+        print('Press any key to stop...')
         input()
 
 
