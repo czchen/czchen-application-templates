@@ -28,29 +28,36 @@ impl Postgres {
 
 impl Image for Postgres {
     type Args = ();
+
     fn name(&self) -> String {
         self.name.clone()
     }
+
     fn tag(&self) -> String {
         self.tag.clone()
     }
+
     fn ready_conditions(&self) -> Vec<WaitFor> {
         vec![WaitFor::message_on_stderr(
             "database system is ready to accept connections",
         )]
     }
+
     fn env_vars(&self) -> Box<dyn Iterator<Item = (&String, &String)> + '_> {
         Box::new(self.env_vars.iter())
     }
 }
 
 fn main() {
-    let podman = Cli::podman();
+    let docker = Cli::docker();
     let image = Postgres::new("docker.io/postgres".to_owned(), "15.4-bookworm".to_owned());
 
-    podman.run(image);
+    let postgres = docker.run(image);
 
     println!("Press any key to stop...");
     let buffer = &mut [0u8];
     std::io::stdin().read_exact(buffer).unwrap();
+
+    postgres.stop();
+    postgres.rm();
 }
