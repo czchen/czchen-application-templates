@@ -35,10 +35,12 @@ async fn main() {
 
     let args = Args::parse();
 
-    let _settings = args.configs.iter()
-        .fold(
-            config::Config::builder(),
-            |b, c| b.add_source(config::File::with_name(c)))
+    let _settings = args
+        .configs
+        .iter()
+        .fold(config::Config::builder(), |b, c| {
+            b.add_source(config::File::with_name(c))
+        })
         .build()
         .unwrap();
 
