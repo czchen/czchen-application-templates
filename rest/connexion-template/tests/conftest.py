@@ -25,11 +25,11 @@ config:
         with connexion_app.app.app_context():
             db.create_all()
 
-            with db.engine.connect():
+            with db.engine.connect(), connexion_app.test_client() as test_client:
                 yield {
                     'db': db,
                     'flask_app': connexion_app.app,
-                    'test_client': connexion_app.test_client(),
+                    'test_client': test_client,
                 }
 
 
