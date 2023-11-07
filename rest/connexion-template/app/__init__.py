@@ -68,7 +68,7 @@ def get_flask_app():
 
 
     @flask_app.errorhandler(NotFound)
-    def handle_bad_request(exc):
+    def handle_not_found(exc):
         res = {
             'title': http.HTTPStatus.NOT_FOUND.phrase,
             'type': '',
