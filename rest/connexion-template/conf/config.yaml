@@ -30,4 +30,4 @@ logging:
   root:
     level: INFO
     handlers:
-      - console
+    - console

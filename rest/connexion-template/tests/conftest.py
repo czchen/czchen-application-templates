@@ -20,15 +20,16 @@ config:
   SQLALCHEMY_DATABASE_URI: {postgres.get_connection_url()}''')
         hydra.initialize(version_base=None, config_path='../conf')
 
-        flask_app = app.get_flask_app()
+        connexion_app = app.get_app()
 
-        with flask_app.app_context():
+        with connexion_app.app.app_context():
             db.create_all()
 
             with db.engine.connect():
                 yield {
-                    'flask_app': flask_app,
-                    'test_client': flask_app.test_client(),
+                    'db': db,
+                    'flask_app': connexion_app.app,
+                    'test_client': connexion_app.test_client(),
                 }
 
 

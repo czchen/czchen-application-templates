@@ -15,7 +15,7 @@ db-migrate: db-upgrade
 
 .PHONY: run
 run:
-	@FLASK_APP='app:load_config_and_get_flask_app()' poetry run flask run
+	@poetry run gunicorn -k uvicorn.workers.UvicornWorker 'app:load_config_and_get_app()'
 
 .PHONY: test
 test:

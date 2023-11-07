@@ -1,11 +1,11 @@
 import http
 
-from app.storages import db
 from app.storages import Record
 
 
 def test_get_record_found(setup_app):
     test_client = setup_app['test_client']
+    db = setup_app['db']
 
     record_name = 'record-name'
 
@@ -19,8 +19,10 @@ def test_get_record_found(setup_app):
     rsp = test_client.get(f'records/{record.id}')
 
     assert rsp.status_code == http.HTTPStatus.OK
-    assert rsp.json['record']['id'] == record.id
-    assert rsp.json['record']['name'] == record_name
+
+    body = rsp.json()
+    assert body['record']['id'] == record.id
+    assert body['record']['name'] == record_name
 
 
 def test_get_record_not_found(setup_app):

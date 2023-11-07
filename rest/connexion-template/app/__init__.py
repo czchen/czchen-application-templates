@@ -5,32 +5,22 @@ import logging.config
 import pathlib
 import time
 
+from connexion.options import SwaggerUIOptions
 from omegaconf import OmegaConf
 from werkzeug.exceptions import NotFound
 import connexion
 import hydra
-import prance
 
 
 from .storages import db
 
 
-def load_config_and_get_flask_app():
+def load_config_and_get_app():
     hydra.initialize(version_base=None, config_path='../conf')
-    return get_flask_app()
+    return get_app()
 
 
-def get_bundled_spec():
-    parser = prance.ResolvingParser(
-        str((pathlib.Path(__file__).parent.parent / 'openapi' / 'main.yml').absolute()),
-        lazy=False,
-        backend='openapi-spec-validator'
-    )
-    parser.parse()
-    return parser.specification
-
-
-def get_flask_app():
+def get_app():
     config = OmegaConf.to_container(hydra.compose(config_name='config'))
 
     logging.Formatter.converter = time.gmtime
@@ -39,13 +29,11 @@ def get_flask_app():
     connextion_app = connexion.FlaskApp(
         __name__,
         specification_dir='openapi/',
-        options={
-            'swagger_ui': True,
-        },
+        swagger_ui_options=SwaggerUIOptions(swagger_ui=True)
     )
 
     connextion_app.add_api(
-        get_bundled_spec(),
+        (pathlib.Path(__file__).parent.parent / 'openapi' / 'main.yml').absolute(),
         strict_validation=True,
         validate_responses=True,
     )
@@ -78,4 +66,4 @@ def get_flask_app():
         logging.warning(f'{res=}')
         return res, res['status']
 
-    return flask_app
+    return connextion_app
