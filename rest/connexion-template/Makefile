@@ -15,7 +15,7 @@ db-migrate: db-upgrade
 
 .PHONY: run
 run:
-	@poetry run gunicorn -k uvicorn.workers.UvicornWorker 'app:load_config_and_get_app()'
+	@poetry run gunicorn --worker-class uvicorn.workers.UvicornWorker 'app:load_config_and_get_app()'
 
 .PHONY: test
 test:
