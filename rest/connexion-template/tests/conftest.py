@@ -1,3 +1,4 @@
+from collections import namedtuple
 import pathlib
 
 from testcontainers.postgres import PostgresContainer
@@ -12,6 +13,7 @@ import utils
 @pytest.fixture(scope='session', autouse=True)
 def setup_app():
     config = pathlib.PosixPath(__file__).parent.parent / 'conf' / 'app' / 'override.yaml'
+    App = namedtuple('App', ['app', 'db', 'test_client'])
 
     with PostgresContainer(utils.POSTGRES_IMAGE) as postgres:
         with config.open('wt') as f:
@@ -26,16 +28,16 @@ config:
             db.create_all()
 
             with db.engine.connect(), connexion_app.test_client() as test_client:
-                yield {
-                    'db': db,
-                    'flask_app': connexion_app.app,
-                    'test_client': test_client,
-                }
+                yield App(
+                    app=connexion_app,
+                    db=db,
+                    test_client=test_client,
+                )
 
 
 @pytest.fixture(scope='function', autouse=True)
 def cleanup_datbase(setup_app):
-    flask_app = setup_app['flask_app']
+    flask_app = setup_app.app.app
 
     with flask_app.test_request_context() as request_ctx:
         request_ctx.push()

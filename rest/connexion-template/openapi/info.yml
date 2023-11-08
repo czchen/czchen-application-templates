@@ -9,7 +9,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/info'
-      operationId: app.handlers.info.get_info
+      operationId: app.handlers.info.read_info
 
 components:
   schemas:

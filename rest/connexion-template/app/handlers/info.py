@@ -1,7 +1,7 @@
 import http
 
 
-def get_info():
+def read_info():
     return {
         'version': '0.0.0',
     }, http.HTTPStatus.OK

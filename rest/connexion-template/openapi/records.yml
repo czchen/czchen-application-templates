@@ -21,7 +21,7 @@ paths:
                     $ref: '#/components/schemas/record'
         '404':
           $ref: status-code.yml#/code/404
-      operationId: app.handlers.records.get_record
+      operationId: app.handlers.records.read_record
 
 components:
   schemas:

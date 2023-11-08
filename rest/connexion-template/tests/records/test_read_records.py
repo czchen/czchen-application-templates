@@ -3,9 +3,7 @@ import http
 from app.storages import Record
 
 
-def test_get_record_found(setup_app):
-    test_client = setup_app['test_client']
-    db = setup_app['db']
+def test_read_record_found(setup_app):
 
     record_name = 'record-name'
 
@@ -13,10 +11,10 @@ def test_get_record_found(setup_app):
         name='record-name',
     )
 
-    db.session.add(record)
-    db.session.commit()
+    setup_app.db.session.add(record)
+    setup_app.db.session.commit()
 
-    rsp = test_client.get(f'records/{record.id}')
+    rsp = setup_app.test_client.get(f'records/{record.id}')
 
     assert rsp.status_code == http.HTTPStatus.OK
 
@@ -25,9 +23,7 @@ def test_get_record_found(setup_app):
     assert body['record']['name'] == record_name
 
 
-def test_get_record_not_found(setup_app):
-    test_client = setup_app['test_client']
-
-    rsp = test_client.get('records/0')
+def test_read_record_not_found(setup_app):
+    rsp = setup_app.test_client.get('records/0')
 
     assert rsp.status_code == http.HTTPStatus.NOT_FOUND
